@@ -57,43 +57,6 @@ Large models can take several minutes to compile; `--timeout` controls the
 per-process limit. The seven-design reference check is separate from rerunning
 LLM proof discovery.
 
-## Run LLM-assisted proof discovery
-
-The API adapter accepts an OpenAI-compatible HTTPS chat-completions endpoint.
-Credentials come **only from environment variables**. No key is included,
-and no private instruction file is read. Choose a model actually available
-on your account; `.env.example` documents the variables but is not auto-loaded.
-
-```bash
-export LLM_BASE_URL="https://dashscope.aliyuncs.com/compatible-mode/v1"
-export LLM_MODEL="YOUR_MODEL_ID"
-read -rsp 'API key: ' LLM_API_KEY
-export LLM_API_KEY
-
-# Small paid-API smoke run; remove --dut and --limit for the entire corpus.
-leap-benchmark --arm full --dut aes --limit 2 --output results/smoke
-
-# Optional direct-target comparison, with an independent same-design pool.
-leap-benchmark --arm both --workers 2 --output results/comparison
-```
-
-Use `--disable-thinking` only if your provider supports `enable_thinking=false`.
-The default budget is at most five attempts per requested proof. The `full`
-protocol generates a design-local aggregate lemma from the dependency graph,
-checks it in Lean, and instantiates fixed composition templates for the target
-properties. Later properties can reuse that verified lemma. Therefore **177
-targets do not imply 177 API calls**. `direct` generates target proofs without
-the graph/templates and maintains its own chronological pool.
-
-The frozen protocol does not read `theorems/reference/` when constructing LLM
-prompts. It does use the explicit target-composition templates in `tasks.json`
-in the full arm; these are part of the protocol, not discovered by the model.
-Failed attempts receive deterministic Lean diagnostics. Reports record proof
-outcomes, API calls, tokens, API/Lean time, and actual elaborated dependencies
-on earlier same-design declarations. Results are local and ignored by Git.
-An API failure is reported separately from an unproved theorem. No benchmark
-request is made unless this command is explicitly invoked with credentials.
-
 ## Released theorem corpus
 
 | Design | Theorems |
