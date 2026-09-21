@@ -1,0 +1,43 @@
+experiment_version: "hypergraph_guidance-v1"
+output_root: "outputs/hypergraph_guidance"
+development_manifest: "outputs/multi_phase_proofs/corpus/bottleneck_challenges.json"
+bridge_discovery_run: "outputs/bridge_discovery/r12_20260912T082448062381Z_646c915aea"
+pilot_runs: ["outputs/hypergraph_guidance/r13_20260912T091717580641Z_19429f81c3", "outputs/hypergraph_guidance/r13_20260912T092431118793Z_2ef05b20b2"]
+benchmark_manifest: "config/benchmarks.json"
+
+proof_model:
+  provider: "dashscope_openai_compatible"
+  model: "qwen3.8-flash"
+  api_key_env: "DASHSCOPE_API_KEY"
+  endpoint: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+  temperature: 0.2
+  max_completion_tokens: 4096
+  enable_thinking: false
+  timeout_seconds: 300
+
+max_total_calls: 6
+candidate_edges_per_call: 3
+max_edge_redesign: 1
+lean_timeout_seconds: 30
+retrieval_limit: 16
+trial_ids: [1]
+
+sampling:
+  base_seed: 271828
+  seed_policy: "sha256_frozen_hypergraph_task_v1"
+
+evaluation:
+  derived_properties_per_dut: 2
+  paired_bridge_only_control: true
+  reference_proofs_hidden: true
+  direct_arm_present: false
+
+hypergraph_policy:
+  version: "tpoh-v1"
+  challenge_specific_rules: false
+  dut_specific_rules: false
+
+schema_policy:
+  version: "proof-schema-v3-typed-binders-and-local-normalization"
+  local_transformations_enabled: false
+  skeleton_frozen_before_evaluation: true

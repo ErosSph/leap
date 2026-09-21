@@ -1,0 +1,51 @@
+experiment_version: "bridge_discovery-v1"
+output_root: "outputs/bridge_discovery"
+development_run: "outputs/foundation_first/r11_20260912T071349137996Z_58bebc8306"
+development_manifest: "outputs/multi_phase_proofs/corpus/bottleneck_challenges.json"
+evaluation_manifest: "outputs/multi_phase_proofs/corpus/final_properties.json"
+benchmark_manifest: "config/benchmarks.json"
+
+proof_model:
+  provider: "dashscope_openai_compatible"
+  model: "qwen3.8-flash"
+  api_key_env: "DASHSCOPE_API_KEY"
+  endpoint: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+  temperature: 0.2
+  max_completion_tokens: 4096
+  enable_thinking: false
+  timeout_seconds: 300
+
+max_total_calls: 6
+max_statement_redesign: 2
+candidate_statements_per_call: 3
+lean_timeout_seconds: 30
+retrieval_limit: 16
+trial_ids: [1]
+
+sampling:
+  seed_policy: "sha256_unseen_task_trial_v1"
+  base_seed: 161803
+
+utility_policy:
+  version: "bridge_discovery-utility-v1"
+  high_requires_hypothetical_property_pass: true
+  medium_structural_score: 0.6
+  reject_target_duplicate: true
+  reject_existing_theorem_duplicate: true
+
+bridge_policy:
+  version: "bridge_discovery-bridge-v1"
+  challenge_specific_rules: false
+  dut_specific_rules: false
+
+repair_template_policy:
+  version: "bridge_discovery-repair-templates-v1"
+  frozen_from_development_set: true
+  local_transformations_enabled: false
+
+prompt_policy:
+  version: "bridge_discovery-prompts-v1"
+  multi_candidate_mode: true
+  statement_proof_separated: true
+  direct_target_generation: false
+  reference_proofs_hidden: true

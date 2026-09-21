@@ -1,0 +1,8 @@
+# Frozen source hashes are byte-based, including upstream CRLF files.
+benchmarks/** -text
+theorems/** -text
+*.py text eol=lf
+*.md text eol=lf
+*.toml text eol=lf
+*.yaml text eol=lf
+

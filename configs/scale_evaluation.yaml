@@ -1,0 +1,22 @@
+experiment_version: "scale_evaluation-v1"
+output_root: "outputs/scale_evaluation"
+boundary_evaluation_run: "outputs/boundary_evaluation/r14_20260912T111843337908Z_f60ad225ff"
+proof_model:
+  provider: "dashscope_openai_compatible"
+  model: "qwen3.8-flash"
+  api_key_env: "DASHSCOPE_API_KEY"
+  endpoint: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+  temperature: 0.2
+  max_completion_tokens: 4096
+  enable_thinking: false
+  timeout_seconds: 300
+candidate_count: 3
+candidate_calls: 2
+proof_calls: 2
+lean_timeout_seconds: 30
+trial_ids: [1]
+sampling:
+  base_seed: 271828
+variants: ["legacy_untyped_control", "full_req15"]
+patterns: ["STATE_TRANSITION", "WITNESS_CONSTRUCTION"]
+tasks_per_pattern: 5

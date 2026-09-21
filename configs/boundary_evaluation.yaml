@@ -1,0 +1,20 @@
+experiment_version: "boundary_evaluation-v2"
+output_root: "outputs/boundary_evaluation"
+hypergraph_guidance_run: "outputs/hypergraph_guidance/r13_20260912T093044195852Z_2337c02c68"
+proof_model:
+  provider: "dashscope_openai_compatible"
+  model: "qwen3.8-flash"
+  api_key_env: "DASHSCOPE_API_KEY"
+  endpoint: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+  temperature: 0.2
+  max_completion_tokens: 4096
+  enable_thinking: false
+  timeout_seconds: 300
+candidate_count: 3
+candidate_calls: 1
+proof_calls: 1
+lean_timeout_seconds: 30
+trial_ids: [1]
+sampling:
+  base_seed: 314159
+variants: ["bridge_skeleton", "tpoh_no_skeleton", "tpoh_skeleton_no_aligner", "full_tpoh"]

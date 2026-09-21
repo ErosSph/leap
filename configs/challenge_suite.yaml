@@ -1,0 +1,28 @@
+experiment_version: "challenge_suite-v1"
+output_root: "outputs/challenge_suite"
+source_design_suite_run: "outputs/design_suite/r16_20260914T085753458156Z_485e8aecbb"
+proof_model:
+  provider: "dashscope_openai_compatible"
+  model: "qwen3.8-flash"
+  api_key_env: "DASHSCOPE_API_KEY"
+  endpoint: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+  temperature: 0.2
+  max_completion_tokens: 1024
+  enable_thinking: false
+  timeout_seconds: 300
+max_iterations: 5
+direct_workers: 4
+lean_timeout_seconds: 120
+context_char_limit: 6500
+feedback_char_limit: 2400
+previous_proof_char_limit: 2400
+base_seed: 171717
+duts: ["aes", "picorv32", "modexp", "serv", "ethmac", "zipcpu", "dma_axi"]
+properties_per_dut:
+  aes: 30
+  picorv32: 27
+  modexp: 24
+  serv: 21
+  ethmac: 29
+  zipcpu: 26
+  dma_axi: 20

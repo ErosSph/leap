@@ -1,0 +1,47 @@
+experiment_version: "foundation_first-v1"
+output_root: "outputs/foundation_first"
+challenge_manifest: "outputs/multi_phase_proofs/corpus/bottleneck_challenges.json"
+baseline_manifest: "outputs/multi_phase_proofs/baseline/results.json"
+benchmark_manifest: "config/benchmarks.json"
+
+proof_model:
+  provider: "dashscope_openai_compatible"
+  model: "qwen3.8-flash"
+  api_key_env: "DASHSCOPE_API_KEY"
+  endpoint: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+  temperature: 0.2
+  max_completion_tokens: 4096
+  enable_thinking: false
+  timeout_seconds: 300
+
+max_candidate_calls: 6
+max_lemma_redesign: 2
+lean_timeout_seconds: 180
+retrieval_limit: 16
+trial_ids: [1]
+
+sampling:
+  seed_policy: "sha256_task_trial_v1"
+  base_seed: 130363
+
+foundation_prover:
+  version: "foundation_first-foundation-prover-v1"
+  policy: "fixed_tactic_portfolio_then_generic_multiphase_bridge"
+
+proof_gap_policy:
+  version: "foundation_first-proof-gap-v1"
+  challenge_specific_rules: false
+  reads_reference_proof: false
+  reads_gap_spec: false
+
+diagnosis_policy:
+  version: "foundation_first-candidate-diagnosis-v1"
+  model_calls: false
+  challenge_specific_rules: false
+  rediagnose_after_failed_repair: true
+
+prompt_policy:
+  version: "foundation_first-prompts-v1"
+  reference_proofs_hidden: true
+  human_candidate_lemmas: false
+  direct_target_generation: false

@@ -1,0 +1,45 @@
+experiment_version: "adaptive_proving-v4-flash"
+output_root: "outputs/adaptive_proving"
+challenge_manifest: "outputs/multi_phase_proofs/corpus/bottleneck_challenges.json"
+baseline_manifest: "outputs/multi_phase_proofs/baseline/results.json"
+benchmark_manifest: "config/benchmarks.json"
+
+proof_model:
+  provider: "dashscope_openai_compatible"
+  model: "qwen3.8-flash"
+  api_key_env: "DASHSCOPE_API_KEY"
+  endpoint: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+  temperature: 0.6
+  token_limit_policy: "provider_default_no_client_token_cap"
+  timeout_seconds: 900
+
+max_total_calls: 10
+max_lemma_redesign: 1
+lean_timeout_seconds: 1200
+checkpoints: [3, 5, 8, 10]
+strategies: ["direct", "diagnosis_guided_adaptive_lemma_first"]
+
+trials:
+  phase_a: [1]
+  phase_b: [2, 3]
+
+phase_b_trigger:
+  checkpoint: 10
+  direct_fail_adaptive_pass: 2
+  adaptive_success_advantage: 2
+
+sampling:
+  seed_policy: "paired_sha256_nonce_v1"
+  base_seed: 104729
+
+prompt_policy:
+  version: "adaptive_proving-prompts-v1"
+  reference_proofs_hidden: true
+  candidate_lemmas_human_supplied: false
+  exact_frozen_context: true
+
+diagnosis_policy:
+  version: "adaptive_proving-diagnosis-v1"
+  model_calls: false
+  stalled_repair_threshold: 1
+  challenge_specific_rules: false

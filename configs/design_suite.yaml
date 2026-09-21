@@ -1,0 +1,24 @@
+experiment_version: "design_suite-v1"
+output_root: "outputs/design_suite"
+adaptation_root: "outputs/design_suite/adaptation"
+proof_model:
+  provider: "dashscope_openai_compatible"
+  model: "qwen3.8-flash"
+  api_key_env: "DASHSCOPE_API_KEY"
+  endpoint: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+  temperature: 0.2
+  max_completion_tokens: 2048
+  enable_thinking: false
+  timeout_seconds: 300
+max_iterations: 5
+lean_timeout_seconds: 120
+properties_per_dut:
+  aes: 30
+  picorv32: 27
+  modexp: 24
+  serv: 21
+  ethmac: 29
+  zipcpu: 26
+  dma_axi: 20
+base_seed: 1618033
+duts: ["aes", "picorv32", "modexp", "serv", "ethmac", "zipcpu", "dma_axi"]
