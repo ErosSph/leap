@@ -7,6 +7,10 @@ seven-design** research corpus. The Python translator package retains the name
 `rtl2lean`; experimental modules have descriptive names rather than numbered
 requirement names.
 
+Release checks: **177/177 reference proofs**, **91 Python tests passed**;
+33 archived-output tests are explicitly skipped. See
+[validation details](docs/VALIDATION.md).
+
 ## Install
 
 Use Python 3.10+ and Lean **4.26.0** on Linux. Install Lean with
